@@ -29,6 +29,7 @@ import com.google.inject.Inject;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.event.proxy.ProxyReloadEvent;
+import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.ProxyServer;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -41,6 +42,7 @@ import java.util.List;
 /**
  * @author Mark Vainomaa
  */
+@Plugin(id = "%ID%", name = "%NAME%", version = "%VERSION%", description = "%DESCRIPTION%", authors = { "%AUTHORS%" })
 public final class VelocitySlashServer {
     @Inject private Logger logger;
     @Inject private ProxyServer server;
