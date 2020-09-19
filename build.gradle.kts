@@ -7,7 +7,7 @@ plugins {
 group = "eu.mikroskeem"
 version = "0.0.1-SNAPSHOT"
 
-val velocityApiVersion = "1.0.0-SNAPSHOT"
+val velocityApiVersion = "1.1.0-SNAPSHOT"
 
 repositories {
     mavenLocal()
@@ -24,6 +24,11 @@ dependencies {
 license {
     header = rootProject.file("etc/HEADER")
     filter.include("**/*.java")
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
 }
 
 blossom {
