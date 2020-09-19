@@ -72,7 +72,12 @@ public final class VelocitySlashServer {
         this.server.getAllServers().stream()
                 .map(server -> new ServerCommand(this, server.getServerInfo().getName()))
                 .peek(registeredCommands::add)
-                .forEach(command -> this.server.getCommandManager().register(command, command.getServerName()));
+                .forEach(this::registerCommand);
+    }
+
+    private void registerCommand(ServerCommand command) {
+        var meta = this.server.getCommandManager().metaBuilder(command.getServerName()).build();
+        this.server.getCommandManager().register(meta, command);
     }
 
     @NonNull

@@ -25,16 +25,18 @@
 
 package eu.mikroskeem.velocityslashserver;
 
-import com.velocitypowered.api.command.Command;
-import com.velocitypowered.api.command.CommandSource;
+import com.velocitypowered.api.command.SimpleCommand;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.server.RegisteredServer;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
+import java.util.Collections;
+import java.util.List;
+
 /**
  * @author Mark Vainomaa
  */
-public final class ServerCommand implements Command {
+public final class ServerCommand implements SimpleCommand {
     private final VelocitySlashServer plugin;
     private final String serverName;
     private final String permissionNode;
@@ -42,7 +44,7 @@ public final class ServerCommand implements Command {
     ServerCommand(VelocitySlashServer plugin, String serverName) {
         this.plugin = plugin;
         this.serverName = serverName;
-        this.permissionNode = "slashserver.server" + serverName;
+        this.permissionNode = "velocity.server" + serverName;
     }
 
     @NonNull
@@ -51,7 +53,8 @@ public final class ServerCommand implements Command {
     }
 
     @Override
-    public void execute(CommandSource source, @NonNull String[] args) {
+    public void execute(Invocation invocation) {
+        var source = invocation.source();
         if (!(source instanceof Player)) {
             // TODO: message "must be a player"
             return;
@@ -60,23 +63,19 @@ public final class ServerCommand implements Command {
         Player player = (Player) source;
 
         // Get the server by name
-        RegisteredServer server = this.plugin.getServer().getServer(this.getServerName()).orElse(null);
-        if (server == null) {
-            // TODO: message "no such server"
-            return;
-        }
+        RegisteredServer server = this.plugin.getServer().getServer(this.getServerName())
+                .orElseThrow(() -> new IllegalStateException("Server '" + this.getServerName() + "' does not exist"));
 
-        player.createConnectionRequest(server).connect().thenAcceptAsync(result -> {
-            if (result.isSuccessful()) {
-                // TODO: message "connected successfully"
-            } else {
-                // TODO: message "connection failed"
-            }
-        });
+        player.createConnectionRequest(server).fireAndForget();
     }
 
     @Override
-    public boolean hasPermission(CommandSource source, @NonNull String[] args) {
-        return source.hasPermission(permissionNode);
+    public List<String> suggest(Invocation invocation) {
+        return Collections.emptyList();
+    }
+
+    @Override
+    public boolean hasPermission(Invocation invocation) {
+        return invocation.source().hasPermission(permissionNode);
     }
 }
