@@ -44,7 +44,7 @@ public final class ServerCommand implements SimpleCommand {
     ServerCommand(VelocitySlashServer plugin, String serverName) {
         this.plugin = plugin;
         this.serverName = serverName;
-        this.permissionNode = "velocity.server" + serverName;
+        this.permissionNode = "velocity.server." + serverName;
     }
 
     @NonNull
