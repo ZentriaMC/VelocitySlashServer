@@ -7,7 +7,7 @@ plugins {
 group = "eu.mikroskeem"
 version = "0.0.1-SNAPSHOT"
 
-val velocityApiVersion = "1.1.4"
+val velocityApiVersion = "1.1.5"
 
 repositories {
     mavenLocal()
