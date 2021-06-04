@@ -1,7 +1,7 @@
 plugins {
     java
     id("net.minecrell.licenser") version "0.4.1"
-    id("net.kyori.blossom") version "1.2.0"
+    id("net.kyori.blossom") version "1.3.0"
 }
 
 group = "eu.mikroskeem"
